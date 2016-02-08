@@ -6,6 +6,7 @@ class Ship
   end
 
   def place(x_coordinate, y_coordinate, across = true)
+    return false if @placed
     @x_coordinate = x_coordinate
     @y_coordinate = y_coordinate
     @across = across
@@ -25,6 +26,7 @@ class Ship
         starting_y_coordinate +=1
       end
     end
+    @placed = true
     @ship_pegs = ship_pegs
   end
 
@@ -35,6 +37,9 @@ class Ship
       ship_pegs.has_key?(y_coordinate) && ship_pegs[y_coordinate] == x_coordinate
     end
   end
+end
+
+class AlreadyBeenPlacedError < StandardError
 end
 
 boat = Ship.new(4)
