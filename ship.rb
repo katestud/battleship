@@ -35,21 +35,21 @@ class Ship
   end
 
   def covers?(x_coordinate, y_coordinate)
-    ship_pegs_array = []
     ship_pegs.each do |position|
-      ship_pegs_array << ship_position_coordinates = [position.x_coordinate, position.y_coordinate]
+      return true if position.x_coordinate == x_coordinate && position.y_coordinate == y_coordinate
     end
-    ship_pegs_array.include?([x_coordinate, y_coordinate])
+    false
   end
 
+  def overlaps_with?(other)
+    ship_pegs.each do |position|
+      return true if other.covers?(position.x_coordinate, position.y_coordinate) 
+    end
+    false
+  end
 
-  # def overlaps_with?(other)
-  #   ship_pegs.keys  other.covers
-  # end
 end
 
-class AlreadyBeenPlacedError < StandardError
-end
 
 boat = Ship.new(4)
 boat.place(2,1)
