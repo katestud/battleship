@@ -41,7 +41,8 @@ class Grid
 
   def fire_at(x,y)
     @ships.each do |s|
-      s.fire_at(x,y)
+      position = s.fire_at(x,y)
+      return position
     end
     false
   end
