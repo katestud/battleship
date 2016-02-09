@@ -39,6 +39,13 @@ class Grid
     display_line
   end
 
+  def fire_at(x,y)
+    @ships.each do |s|
+      s.fire_at(x,y)
+    end
+    false
+  end
+
   private def display_line
     puts "  -----------------------------------------"
   end
