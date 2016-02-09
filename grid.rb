@@ -15,6 +15,9 @@ class Grid
 
   def place_ship(ship, x, y, across)
     ship.place(x, y, across)
+    @ships.each do |s|
+      return false if s.overlaps_with?(ship)
+    end
     @ships << ship
   end
 
