@@ -1,6 +1,22 @@
 class Grid
   attr_reader :ships
 
+  def initialize
+    @ships = []
+  end
+
+  def has_ship_on?(x,y)
+    found = false
+    @ships.each do |s|
+      found = true if s.covers?(x,y)
+    end
+    found
+  end
+
+  def place_ship(ship, x, y, across)
+    ship.place(x, y, across)
+    @ships << ship
+  end
 
 
   def display
