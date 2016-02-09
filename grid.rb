@@ -23,16 +23,28 @@ class Grid
 
 
   def display
-  puts "    1   2   3   4   5   6   7   8   9   10"
-  display_line
-  ("A".."J").each do |l|
-    puts l + " |   |   |   |   |   |   |   |   |   |   |"
+    table_header
+    display_line
+    ("A".."J").each_with_index do |l, i|
+      row = "  |   |   |   |   |   |   |   |   |   |   |"
+      y = i+1
+      row[0] = l
+      (1..10).each do |x|
+        if has_ship_on?(x,y)
+          row[x + (x * 3)] = "O"
+        end
+      end
+      puts row
+    end
+    display_line
   end
-  display_line
-end
 
-private def display_line
-  puts "  -----------------------------------------"
-end
+  private def display_line
+    puts "  -----------------------------------------"
+  end
+
+  private def table_header
+    puts "    1   2   3   4   5   6   7   8   9   10"
+  end
 
 end
