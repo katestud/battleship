@@ -1,16 +1,17 @@
 class Grid
-  attr_reader :ships
+  attr_reader :ships, :ready_grid, :used_grid
 
   def initialize
     @ships = []
+    # @fired_at = false
+    # @ready_grid = ""
   end
 
   def has_ship_on?(x,y)
-    found = false
     @ships.each do |s|
-      found = true if s.covers?(x,y)
+      return s if s.covers?(x,y)
     end
-    found
+    false
   end
 
   def place_ship(ship, x, y, across)
@@ -29,22 +30,51 @@ class Grid
       row = "  |   |   |   |   |   |   |   |   |   |   |"
       y = i+1
       row[0] = l
-      (1..10).each do |x|
-        if has_ship_on?(x,y)
-          row[x + (x * 3)] = "O"
+        (1..10).each do |x|
+        ship_exists = has_ship_on?(x,y)
+          if ship_exists && ship_exists.fire_at(x,y)
+            row[x + (x * 3)] = "X"
+          elsif ship_exists
+            row[x + (x * 3)] = "O"
+          end
+      # else
+      #   (1..10).each do |x|
+      #     if has_ship_on?(x,y)
+      #       row[x + (x * 3)] = "O"
         end
-      end
+        # end
+      # end
       puts row
     end
     display_line
   end
 
   def fire_at(x,y)
-    @ships.each do |s|
-      position = s.fire_at(x,y)
-      return position
+    ship = has_ship_on?(x,y)
+    if ship
+      ship.fire_at(x,y)
+      return true
     end
     false
+  end
+
+
+
+  def empty_grid
+      %Q{    1   2   3   4   5   6   7   8   9   10
+    -----------------------------------------
+    A |   |   |   |   |   |   |   |   |   |   |
+    B |   |   |   |   |   |   |   |   |   |   |
+    C |   |   |   |   |   |   |   |   |   |   |
+    D |   |   |   |   |   |   |   |   |   |   |
+    E |   |   |   |   |   |   |   |   |   |   |
+    F |   |   |   |   |   |   |   |   |   |   |
+    G |   |   |   |   |   |   |   |   |   |   |
+    H |   |   |   |   |   |   |   |   |   |   |
+    I |   |   |   |   |   |   |   |   |   |   |
+    J |   |   |   |   |   |   |   |   |   |   |
+    -----------------------------------------
+    }
   end
 
   private def display_line
@@ -54,5 +84,7 @@ class Grid
   private def table_header
     puts "    1   2   3   4   5   6   7   8   9   10"
   end
+
+
 
 end
