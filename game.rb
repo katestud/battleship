@@ -1,3 +1,7 @@
 class Game
 
-end  
+  def initialize(human, computer)
+
+  end  
+
+end
