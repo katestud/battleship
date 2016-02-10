@@ -61,6 +61,17 @@ class Grid
     all_sunk
   end
 
+  def x_of(string)
+    string[0] = ""
+    string.to_i
+  end
+
+  def y_of(string)
+    ("A".."J").each_with_index do |l, i|
+      return i if string[0] = l
+    end
+  end
+
   private def display_line
     puts "  -----------------------------------------"
   end
