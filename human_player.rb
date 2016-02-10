@@ -7,17 +7,14 @@ class HumanPlayer < Player
   end
 
   def place_ships(array = [2,3,3,4,5])
-    ship_number = 0
-    while (ship_number < array.length)
-      ship_length = array[ship_number]
+    array.each do |ship_length|
       puts "#{@name}, where would you like to place a ship of length #{ship_length}?"
       coordinates = get_user_input
       puts "Across or Down?"
       direction = get_user_input
-      if @grid.place_ship(Ship.new(ship_length), grid.x_of(coordinates), grid.y_of(coordinates), direction=="Across")
-        ship_number +=1
-      else
+      unless @grid.place_ship(Ship.new(ship_length), grid.x_of(coordinates), grid.y_of(coordinates), direction=="Across")
         puts "Unfortunately, that ship overlaps with one of your other ships.  Please try again.\n"
+        redo
       end
     end
   end

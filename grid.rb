@@ -4,7 +4,6 @@ class Grid
   def initialize
     @ships = []
     @fired_at = []
-    @sunk = false
   end
 
   def has_ship_on?(x,y)
