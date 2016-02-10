@@ -5,3 +5,5 @@ require './ship.rb'
 require './position.rb'
 require './grid.rb'
 require './game.rb'
+
+puts Grid::EMPTYGRID
