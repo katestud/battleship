@@ -1,3 +1,5 @@
 class Player
-
-end  
+  def grid
+    grid = Grid.new
+  end
+end
