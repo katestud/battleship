@@ -8,11 +8,10 @@ class Grid
   end
 
   def has_ship_on?(x,y)
-    found = false
     @ships.each do |s|
-      found = true if s.covers?(x,y)
+      return s if s.covers?(x,y)
     end
-    found
+    false
   end
 
   def place_ship(ship, x, y, across)
@@ -54,11 +53,7 @@ class Grid
 
   def sunk?
     return false if @ships.empty?
-    all_sunk = true
-    @ships.each do |s|
-      all_sunk = false if !s.sunk?
-    end
-    all_sunk
+    @ships.all? {|s| s.sunk?}
   end
 
   def x_of(string)
