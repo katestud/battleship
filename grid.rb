@@ -62,8 +62,7 @@ class Grid
   end
 
   def x_of(string)
-    string[0] = ""
-    string.to_i
+    string[1..-1].to_i
   end
 
   def y_of(string)
