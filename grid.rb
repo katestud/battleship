@@ -8,10 +8,11 @@ class Grid
   end
 
   def has_ship_on?(x,y)
+    found = false
     @ships.each do |s|
-      return s if s.covers?(x,y)
+      found = true if s.covers?(x,y)
     end
-    false
+    found
   end
 
   def place_ship(ship, x, y, across)
@@ -31,10 +32,9 @@ class Grid
       y = i+1
       row[0] = l
         (1..10).each do |x|
-        ship_exists = has_ship_on?(x,y)
-          if ship_exists && ship_exists.fire_at(x,y)
+          if fire_at(x,y)
             row[x + (x * 3)] = "X"
-          elsif ship_exists
+          elsif has_ship_on?(x,y)
             row[x + (x * 3)] = "O"
           end
       # else
@@ -50,15 +50,14 @@ class Grid
   end
 
   def fire_at(x,y)
-    ship = has_ship_on?(x,y)
-    if ship
-      ship.fire_at(x,y)
-      return true
+    fired_at = false
+    @ships.each do |s|
+      fired_at = true if s.fire_at(x,y)
+      @fired_at = position
+      return position
     end
     false
   end
-
-
 
   def empty_grid
       %Q{    1   2   3   4   5   6   7   8   9   10
