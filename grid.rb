@@ -4,6 +4,7 @@ class Grid
   def initialize
     @ships = []
     @fired_at = []
+    @sunk = false
   end
 
   def has_ship_on?(x,y)
@@ -49,6 +50,15 @@ class Grid
       return position
     end
     false
+  end
+
+  def sunk?
+    return false if @ships.empty?
+    all_sunk = true
+    @ships.each do |s|
+      all_sunk = false if !s.sunk?
+    end
+    all_sunk
   end
 
   private def display_line
