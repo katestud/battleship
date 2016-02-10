@@ -68,7 +68,9 @@ class Grid
 
   def y_of(string)
     ("A".."J").each_with_index do |l, i|
-      return i if string[0] = l
+      if string[0] == l
+        return i + 1
+      end
     end
   end
 
