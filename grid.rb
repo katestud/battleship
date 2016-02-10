@@ -3,6 +3,7 @@ class Grid
 
   def initialize
     @ships = []
+    @fired_at = []
   end
 
   def has_ship_on?(x,y)
@@ -30,7 +31,9 @@ class Grid
       y = i+1
       row[0] = l
       (1..10).each do |x|
-        if has_ship_on?(x,y)
+        if @fired_at.include?([x,y])
+          row[x + (x * 3)] = "X"
+        elsif has_ship_on?(x,y)
           row[x + (x * 3)] = "O"
         end
       end
@@ -42,6 +45,7 @@ class Grid
   def fire_at(x,y)
     @ships.each do |s|
       position = s.fire_at(x,y)
+      @fired_at << [x,y] if s.covers?(x,y)
       return position
     end
     false
