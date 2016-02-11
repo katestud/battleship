@@ -1,24 +1,35 @@
 class Game
 
   def initialize(player_one, player_two)
-    @players = [player_one, player_two]
+    @player_one = player_one
+    @player_two = player_two
+    @players = [@player_one, @player_two]
+    @turns = 0
   end
 
   def welcome
-    puts "Welcome, #{@players[0].name} and #{@players[1].name}!\nIt's time to play Battleship.\n"
+    puts "Welcome, #{@player_one.name} and #{@player_two.name}!\nIt's time to play Battleship.\n"
   end
 
   def place_ships
-    @players[0].place_ships
-    @players[1].place_ships
+    @player_one.place_ships
+    @player_two.place_ships
   end
 
   def display_status
-    puts "SHOTS TAKEN:"
-    puts Grid::EMPTYGRID
-    puts "\nYOUR BOARD:"
-    @players[0].grid.display
+    if @turns == 0
+      puts "SHOTS TAKEN:"
+      puts Grid::EMPTYGRID
+      puts "\nYOUR BOARD:"
+      @players[0].grid.display
+    else
+      puts "SHOTS TAKEN:"
+      @players[1].grid.display_shots
+      puts "\nYOUR BOARD:"
+      @players[0].grid.display
+    end
   end
+
 
   def x_of(string)
     string[1..-1].to_i
@@ -36,11 +47,14 @@ class Game
     player_one = @players[0]
     player_two = @players[1]
     coordinates = player_one.call_shot
-    if player_two.grid.fire_at(x_of(coordinates), y_of(coordinates) )
+    if player_two.grid.fire_at(x_of(coordinates), y_of(coordinates))
       puts "Hit!"
+      player_two.grid.fired_at << [x_of(coordinates), y_of(coordinates)]
     else
       puts "Miss!"
+      player_two.grid.missed << [x_of(coordinates), y_of(coordinates)]
     end
+    @turns =+ 1
     @players.reverse!
   end
 end
