@@ -47,14 +47,26 @@ class Game
     player_one = @players[0]
     player_two = @players[1]
     coordinates = player_one.call_shot
-    if player_two.grid.fire_at(x_of(coordinates), y_of(coordinates))
+    x = x_of("#{coordinates}")
+    y = y_of("#{coordinates}")
+    if player_two.grid.fire_at(x, y)
       puts "Hit!"
-      player_two.grid.fired_at << [x_of(coordinates), y_of(coordinates)]
     else
       puts "Miss!"
-      player_two.grid.missed << [x_of(coordinates), y_of(coordinates)]
+      player_two.grid.missed << [x,y]
     end
     @turns =+ 1
     @players.reverse!
   end
+
+  def play
+    welcome
+    place_ships
+    take_turn
+    until "#{@players[1].grid.display}".include?("X") && !"#{@players[1].grid.display}".include?("0")
+      take_turn
+    end
+    "Congratulations, #{@players[0]}!"
+  end
+
 end

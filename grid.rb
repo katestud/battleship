@@ -49,9 +49,9 @@ J |   |   |   |   |   |   |   |   |   |   |
       row[0] = l
       (1..10).each do |x|
         if @fired_at.include?([x,y])
-          row[x + (x * 3)] = "X"
+          row[x * 4] = "X"
         elsif has_ship_on?(x,y)
-          row[x + (x * 3)] = "O"
+          row[x * 4] = "O"
         end
       end
       puts row
